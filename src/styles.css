@@ -1,0 +1,16 @@
+body {
+    font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+    background-color: cornflowerblue;
+}
+.main-div {
+    margin: 10vh auto;
+    width: 500px;
+    height: 500px;
+    background-color: blanchedalmond;
+    border: 2px solid black;
+    border-radius: 5%;
+}
+.place-name {
+    font-size: 5em;
+    padding: 12px;
+}
