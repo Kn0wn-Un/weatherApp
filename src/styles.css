@@ -5,15 +5,33 @@ body {
 .main-div {
     margin: 10vh auto;
     width: 500px;
-    height: 500px;
+    min-height: 500px;
     background-color: blanchedalmond;
     border: 2px solid black;
     border-radius: 5%;
 }
+.info-div {
+    padding-bottom: 10px;
+}
 .place-name {
-    font-size: 5em;
+    font-size: 4em;
     padding: 12px;
+}
+.main-div h2 {
+    margin: 10px 0px 3px 0px;
 }
 .user-input {
     margin: 25px;
+}
+.desc {
+    margin: 0px;
+    padding: 1px 10px;
+    font-size: 2em;
+    font-weight: bold;
+}
+.sep {
+    padding: 0px 10px;
+}
+.sep div {
+    padding: 5px;
 }

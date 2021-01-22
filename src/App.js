@@ -28,12 +28,10 @@ function App() {
         setGotData(true);
     }
     function handleSearch(city) {
-        alert('searching ' + city);
         fetchResults(city);
     }
     function useLocation(c) {
-        console.log(c.latitude);
-        console.log(c.longitude);
+        fetchResults(c.latitude, c.longitude);
     }
     useEffect(() => {
         fetchResults('bengaluru');
@@ -45,25 +43,27 @@ function App() {
                 <div className="main-div">
                     <div className="place-name">{data.name}</div>
                     <div className="info-div">
-                        <div>Description: {data.weather[0].description}</div>
-                        <div>date: {data.dt}</div>
-                        <div>
-                            <div>Temperature: {data.main.temp}</div>
+                        <h1 className="desc">{data.weather[0].description}</h1>
+                        <div className="sep">
+                            <h2>Temperature</h2>
+                            <div>Current: {data.main.temp}</div>
                             <div>Max: {data.main.temp_max}</div>
                             <div>Min: {data.main.temp_min}</div>
+                            <div>feels like: {data.main.feels_like}</div>
                         </div>
-                        <div>
+                        <div className="sep">
+                            <h2>Other</h2>
                             <div>Pressure: {data.main.pressure}</div>
                             <div>Humidity: {data.main.humidity}</div>
                             <div>Visibility: {data.visibility}</div>
-                            <div>feels like: {data.main.feels_like}</div>
                         </div>
-                        <div>
-                            <div>Winds</div>
-                            <div>deg: {data.wind.deg}</div>
+                        <div className="sep">
+                            <h2>Winds</h2>
+                            <div>{data.wind.deg} degrees</div>
                             <div>Speed: {data.wind.speed}</div>
                         </div>
-                        <div>
+                        <div className="sep">
+                            <h2>Sunrise and Sunset</h2>
                             <div>Sunrise: {data.sys.sunrise}</div>
                             <div>Sunset: {data.sys.sunset}</div>
                         </div>
