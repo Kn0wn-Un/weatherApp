@@ -1,17 +1,25 @@
-import { IconButton, OutlinedInput, InputAdornment } from '@material-ui/core';
-import { Search, LocationOn } from '@material-ui/icons';
 import { useEffect, useState } from 'react';
+import UserInput from './UserInput';
 import './styles.css';
 function App() {
     const [data, setData] = useState({});
     const [gotData, setGotData] = useState(false);
-    const [search, setSearch] = useState('Bengaluru');
-    async function fetchResults() {
-        const response = await fetch(
-            `https://api.openweathermap.org/data/2.5/weather?q=${search}&appid=a60446147f601604724971a987162ebb`
-        );
+    async function fetchResults(city, lon) {
+        let response;
+        if (!lon) {
+            response = await fetch(
+                `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=a60446147f601604724971a987162ebb&units=metric`
+            );
+        } else {
+            let lat = city;
+            response = await fetch(
+                `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=a60446147f601604724971a987162ebb&units=metric`
+            );
+        }
         if (!response.ok) {
-            setData(false);
+            setGotData(false);
+            fetchResults('bengaluru');
+            alert('city not found :(');
             return;
         }
         const res = await response.json();
@@ -19,59 +27,45 @@ function App() {
         setData(res);
         setGotData(true);
     }
-    function handleClick() {}
-    function handleSearch() {}
+    function handleSearch(city) {
+        alert('searching ' + city);
+        fetchResults(city);
+    }
+    function useLocation(c) {
+        console.log(c.latitude);
+        console.log(c.longitude);
+    }
     useEffect(() => {
-        fetchResults();
+        fetchResults('bengaluru');
     }, []);
     return (
         <div>
+            <UserInput handleSearch={handleSearch} useLocation={useLocation} />
             {gotData ? (
-                <div>
-                    <div>
-                        <OutlinedInput
-                            id="outlined-adornment-weight"
-                            value={search}
-                            onChange={handleClick}
-                            endAdornment={
-                                <InputAdornment position="end">
-                                    <IconButton
-                                        onClick={handleSearch}
-                                        edge="end"
-                                    >
-                                        <Search />
-                                    </IconButton>
-                                </InputAdornment>
-                            }
-                            aria-describedby="outlined-weight-helper-text"
-                            inputProps={{
-                                'aria-label': 'weight',
-                            }}
-                            labelWidth={0}
-                        />
-                    </div>
-                    <div className="main-div">
-                        <div className="place-name">
-                            <span>{data.name}</span>
-                            <LocationOn color="primary" fontSize="large" />
-                        </div>
-                        <div className="info-div">
+                <div className="main-div">
+                    <div className="place-name">{data.name}</div>
+                    <div className="info-div">
+                        <div>Description: {data.weather[0].description}</div>
+                        <div>date: {data.dt}</div>
+                        <div>
                             <div>Temperature: {data.main.temp}</div>
                             <div>Max: {data.main.temp_max}</div>
-                            <div>Min: {data.main.temp.min}</div>
+                            <div>Min: {data.main.temp_min}</div>
+                        </div>
+                        <div>
                             <div>Pressure: {data.main.pressure}</div>
                             <div>Humidity: {data.main.humidity}</div>
-                            <div>feels like: {data.main.feels_like}</div>
-                            <div>Sunrise: {data.sys.sunrise}</div>
-                            <div>Sunset: {data.sys.sunset}</div>
                             <div>Visibility: {data.visibility}</div>
-                            <div>
-                                Description: {data.weather[0].description}
-                            </div>
-                            <div>date: {data.dt}</div>
+                            <div>feels like: {data.main.feels_like}</div>
+                        </div>
+                        <div>
                             <div>Winds</div>
                             <div>deg: {data.wind.deg}</div>
                             <div>Speed: {data.wind.speed}</div>
+                        </div>
+                        <div>
+                            <div>Sunrise: {data.sys.sunrise}</div>
+                            <div>Sunset: {data.sys.sunset}</div>
                         </div>
                     </div>
                 </div>
