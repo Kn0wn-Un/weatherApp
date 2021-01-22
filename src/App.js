@@ -43,7 +43,9 @@ function App() {
                 <div className="main-div">
                     <div className="place-name">{data.name}</div>
                     <div className="info-div">
-                        <h1 className="desc">{data.weather[0].description}</h1>
+                        <div className="desc">
+                            {data.weather[0].description}
+                        </div>
                         <div className="sep">
                             <h2>Temperature</h2>
                             <div>Current: {data.main.temp}</div>
