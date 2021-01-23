@@ -6,9 +6,8 @@ body {
     margin: 10vh auto;
     width: 500px;
     min-height: 500px;
-    background-color: blanchedalmond;
-    border: 2px solid black;
-    border-radius: 5%;
+    box-shadow: 0px 0px 5px black;
+    border-radius: 3%;
 }
 .info-div {
     padding-bottom: 10px;
@@ -34,4 +33,26 @@ body {
 }
 .sep div {
     padding: 5px;
+}
+.divide {
+    display: flex;
+    flex-direction: row;
+    align-content: flex-end;
+}
+.right {
+    position: relative;
+    top: 70px;
+}
+.toggle {
+    font-size: 4em;
+    width: fit-content;
+    padding: 30px;
+}
+.toggle h1 {
+    font-size: 0.4em;
+}
+.f {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }

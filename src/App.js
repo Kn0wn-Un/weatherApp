@@ -1,19 +1,23 @@
 import { useEffect, useState } from 'react';
 import UserInput from './UserInput';
+import Weather from './Weather';
+import Toggle from './Toggle';
 import './styles.css';
 function App() {
     const [data, setData] = useState({});
     const [gotData, setGotData] = useState(false);
-    async function fetchResults(city, lon) {
+    const [units, setUnits] = useState('imperial');
+    const [city, setCity] = useState('bengaluru');
+    async function fetchResults(c, lon) {
         let response;
         if (!lon) {
             response = await fetch(
-                `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=a60446147f601604724971a987162ebb&units=metric`
+                `https://api.openweathermap.org/data/2.5/weather?q=${c}&appid=a60446147f601604724971a987162ebb&units=${units}`
             );
         } else {
-            let lat = city;
+            let lat = c;
             response = await fetch(
-                `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=a60446147f601604724971a987162ebb&units=metric`
+                `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=a60446147f601604724971a987162ebb&units=${units}`
             );
         }
         if (!response.ok) {
@@ -23,57 +27,45 @@ function App() {
             return;
         }
         const res = await response.json();
+        res.sys.sunrise = setTime(res.sys.sunrise * 1000);
+        res.sys.sunset = setTime(res.sys.sunset * 1000);
         console.log(res);
         setData(res);
         setGotData(true);
     }
-    function handleSearch(city) {
-        fetchResults(city);
+    function handleSearch(ci) {
+        setCity(ci);
+        fetchResults(ci);
     }
     function useLocation(c) {
+        setCity(c);
         fetchResults(c.latitude, c.longitude);
+    }
+    function setTime(t) {
+        let d = new Date(t);
+        return d.toLocaleTimeString();
     }
     useEffect(() => {
         fetchResults('bengaluru');
     }, []);
+    useEffect(() => {
+        if (typeof city === 'object')
+            fetchResults(city.latitude, city.longitude);
+        else fetchResults(city);
+    }, [units]);
     return (
         <div>
             <UserInput handleSearch={handleSearch} useLocation={useLocation} />
-            {gotData ? (
+            <div className="f">
+                <Toggle change={setUnits} units={units} />
                 <div className="main-div">
-                    <div className="place-name">{data.name}</div>
-                    <div className="info-div">
-                        <div className="desc">
-                            {data.weather[0].description}
-                        </div>
-                        <div className="sep">
-                            <h2>Temperature</h2>
-                            <div>Current: {data.main.temp}</div>
-                            <div>Max: {data.main.temp_max}</div>
-                            <div>Min: {data.main.temp_min}</div>
-                            <div>feels like: {data.main.feels_like}</div>
-                        </div>
-                        <div className="sep">
-                            <h2>Other</h2>
-                            <div>Pressure: {data.main.pressure}</div>
-                            <div>Humidity: {data.main.humidity}</div>
-                            <div>Visibility: {data.visibility}</div>
-                        </div>
-                        <div className="sep">
-                            <h2>Winds</h2>
-                            <div>{data.wind.deg} degrees</div>
-                            <div>Speed: {data.wind.speed}</div>
-                        </div>
-                        <div className="sep">
-                            <h2>Sunrise and Sunset</h2>
-                            <div>Sunrise: {data.sys.sunrise}</div>
-                            <div>Sunset: {data.sys.sunset}</div>
-                        </div>
-                    </div>
+                    {gotData ? (
+                        <Weather units={units} data={data} />
+                    ) : (
+                        <h1>'Loading...'</h1>
+                    )}
                 </div>
-            ) : (
-                'Loading...'
-            )}
+            </div>
         </div>
     );
 }
