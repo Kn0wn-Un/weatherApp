@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import UserInput from './UserInput';
 import Weather from './Weather';
-import MYAPIKEY from './myapi';
 import './styles.css';
 function App() {
     const [data, setData] = useState({});
     const [gotData, setGotData] = useState(false);
     const [units, setUnits] = useState('imperial');
     const [city, setCity] = useState('bengaluru');
+    const MYAPIKEY = process.env.REACT_APP_WEATHER_API_KEY;
     async function fetchResults(c, lon) {
         let response;
         if (!lon) {
