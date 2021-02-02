@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import UserInput from './UserInput';
 import Weather from './Weather';
+import MYAPIKEY from './myapi';
 import './styles.css';
 function App() {
     const [data, setData] = useState({});
@@ -11,12 +12,12 @@ function App() {
         let response;
         if (!lon) {
             response = await fetch(
-                `https://api.openweathermap.org/data/2.5/weather?q=${c}&appid=a60446147f601604724971a987162ebb&units=${units}`
+                `https://api.openweathermap.org/data/2.5/weather?q=${c}&appid=${MYAPIKEY}&units=${units}`
             );
         } else {
             let lat = c;
             response = await fetch(
-                `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=a60446147f601604724971a987162ebb&units=${units}`
+                `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${MYAPIKEY}&units=${units}`
             );
         }
         if (!response.ok) {
@@ -29,7 +30,6 @@ function App() {
         const res = await response.json();
         res.sys.sunrise = setTime(res.sys.sunrise * 1000);
         res.sys.sunset = setTime(res.sys.sunset * 1000);
-        console.log(res);
         setData(res);
         setGotData(true);
     }
