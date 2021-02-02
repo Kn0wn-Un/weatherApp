@@ -12,7 +12,7 @@ function Weather(props) {
                             {props.units === 'metric' ? '°C' : ' F'}
                         </div>
                         <div>
-                            <b>Maximum Temperature:</b>
+                            <b>Maximum Temperature:</b>{' '}
                             {props.data.main.temp_max}
                             {props.units === 'metric' ? '°C' : ' F'}
                         </div>

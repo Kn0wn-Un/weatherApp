@@ -9,14 +9,14 @@ function Toggle(props) {
             }}
             className="toggle"
         >
-            <h1>Units</h1>
+            <h1>Units:</h1>
             {props.units === 'metric' ? (
                 <div>
-                    <b>°C</b>/F
+                    <b style={{ color: 'rgb(63, 55, 201)' }}>°C</b>/F
                 </div>
             ) : (
                 <div>
-                    °C/<b>F</b>
+                    °C/<b style={{ color: 'rgb(214, 40, 40)' }}>F</b>
                 </div>
             )}
         </div>

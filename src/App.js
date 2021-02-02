@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import UserInput from './UserInput';
 import Weather from './Weather';
-import Toggle from './Toggle';
 import './styles.css';
 function App() {
     const [data, setData] = useState({});
@@ -24,6 +23,7 @@ function App() {
             setGotData(false);
             fetchResults('bengaluru');
             alert('city not found :(');
+            setCity('bengaluru');
             return;
         }
         const res = await response.json();
@@ -34,6 +34,7 @@ function App() {
         setGotData(true);
     }
     function handleSearch(ci) {
+        if (!ci) return;
         setCity(ci);
         fetchResults(ci);
     }
@@ -47,17 +48,25 @@ function App() {
     }
     useEffect(() => {
         fetchResults('bengaluru');
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     useEffect(() => {
         if (typeof city === 'object')
             fetchResults(city.latitude, city.longitude);
         else fetchResults(city);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [units]);
     return (
         <div>
-            <UserInput handleSearch={handleSearch} useLocation={useLocation} />
+            <span>
+                <UserInput
+                    handleSearch={handleSearch}
+                    useLocation={useLocation}
+                    setUnits={setUnits}
+                    units={units}
+                />
+            </span>
             <div className="f">
-                <Toggle change={setUnits} units={units} />
                 <div className="main-div">
                     {gotData ? (
                         <Weather units={units} data={data} />

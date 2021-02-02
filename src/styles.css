@@ -1,13 +1,12 @@
 body {
     font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
-    background-color: cornflowerblue;
+    background-color: rgb(58, 134, 255);
 }
 .main-div {
-    margin: 10vh auto;
-    width: 500px;
+    margin: -40px auto;
+    width: 750px;
     min-height: 500px;
-    box-shadow: 0px 0px 5px black;
-    border-radius: 3%;
+    font-size: 1.25em;
 }
 .info-div {
     padding-bottom: 10px;
@@ -19,14 +18,18 @@ body {
 .main-div h2 {
     margin: 10px 0px 3px 0px;
 }
+.main-div b {
+    color: rgb(63, 55, 201);
+}
 .user-input {
     margin: 25px;
 }
 .desc {
     margin: 0px;
     padding: 1px 10px;
-    font-size: 2em;
+    font-size: 2.5em;
     font-weight: bold;
+    color: rgb(214, 40, 40);
 }
 .sep {
     padding: 0px 10px;
@@ -47,12 +50,13 @@ body {
     font-size: 4em;
     width: fit-content;
     padding: 30px;
+    display: inline-block;
+    margin: auto 20px;
 }
 .toggle h1 {
     font-size: 0.4em;
 }
-.f {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
+.search {
+    position: relative;
+    top: -80px;
 }
