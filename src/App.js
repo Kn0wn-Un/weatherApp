@@ -5,7 +5,7 @@ import './styles.css';
 function App() {
     const [data, setData] = useState({});
     const [gotData, setGotData] = useState(false);
-    const [units, setUnits] = useState('imperial');
+    const [units, setUnits] = useState('metric');
     const [city, setCity] = useState('bengaluru');
     const MYAPIKEY = process.env.REACT_APP_WEATHER_API_KEY;
     async function fetchResults(c, lon) {
